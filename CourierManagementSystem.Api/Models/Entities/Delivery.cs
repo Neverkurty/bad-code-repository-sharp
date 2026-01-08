@@ -56,10 +56,16 @@ namespace CourierManagementSystem.Api.Models.Entities
     }
 
     public enum DeliveryStatus
-    {
-        planned,
-        in_progress,
-        completed,
-        cancelled
-    }
+{
+    Created,
+    Assigned,
+    Delivered,
+    Cancelled
+}
+
+public class Delivery
+{
+    public DeliveryStatus Status { get; private set; }
+}
+
 }
