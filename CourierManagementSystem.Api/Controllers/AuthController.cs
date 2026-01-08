@@ -17,13 +17,42 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
-    [HttpPost("login")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+[HttpPost("login")]
+public IActionResult Login(LoginRequest request)
+{
+    var user = AuthenticateUser(request);
+    var token = GenerateJwtToken(user);
+    return Ok(new { Token = token });
+}
+private User AuthenticateUser(LoginRequest request)
+{
+    var user = _context.Users.FirstOrDefault(x => x.Email == request.Email);
+
+    if (user == null || !BCrypt.Verify(request.Password, user.PasswordHash))
+        throw new UnauthorizedAccessException();
+
+    return user;
+}
+
+private string GenerateJwtToken(User user)
+{
+    var tokenHandler = new JwtSecurityTokenHandler();
+    var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+
+    var tokenDescriptor = new SecurityTokenDescriptor
     {
-        var response = await _authService.LoginAsync(request);
-        return Ok(response);
-    }
+        Subject = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.Name, user.Id.ToString())
+        }),
+        Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationMinutes),
+        SigningCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(key),
+            SecurityAlgorithms.HmacSha256Signature)
+    };
+
+    return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+}
 
     [HttpGet("debug")]
     [AllowAnonymous]
