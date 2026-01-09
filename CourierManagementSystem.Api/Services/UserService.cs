@@ -47,13 +47,14 @@ public class UserService : IUserService
         return UserDto.From(user);
     }
 
-    public async Task<UserDto> UpdateUserAsync(long id, UserUpdateRequest request)
+    private async Task<User> GetUserOrThrowAsync(long id)
     {
-        var user = await _userRepository.GetByIdAsync(id);
-        if (user == null)
-        {
-            throw new NotFoundException("User", id);
-        }
+        return await _userRepository.GetByIdAsync(id)
+            ?? throw new NotFoundException("User", id);
+    }
+    var user = await GetUserOrThrowAsync(id);
+
+
 
         if (!string.IsNullOrEmpty(request.Login) && request.Login != user.Login)
         {
