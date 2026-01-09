@@ -62,12 +62,12 @@ public class UserService : IUserService
             {
                 throw new ValidationException($"Пользователь с логином '{request.Login}' уже существует");
             }
-            user.Login = request.Login;
+            user.ChangeLogin(request.Login);
         }
 
         if (!string.IsNullOrEmpty(request.Name))
         {
-            user.Name = request.Name;
+            user.ChangeName(request.Name);
         }
 
         if (request.Role.HasValue)
