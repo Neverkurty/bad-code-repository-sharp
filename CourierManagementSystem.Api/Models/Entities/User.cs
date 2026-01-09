@@ -12,22 +12,26 @@ namespace CourierManagementSystem.Api.Models.Entities
     [Table("users")]
     public class User
     {
+        public string Login { get; private set; }
+        public string Name { get; private set; }
+
+        public void ChangeLogin(string login)
+        {
+            Login = login;
+        }
+
+        public void ChangeName(string name)
+        {
+            Name = name;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Column("login")]
-        [Required]
-        [MaxLength(50)]
-        public string Login { get; set; } = null!;
-
         [Column("password_hash")]
         [Required]
         public string PasswordHash { get; set; } = null!;
-
-        [Column("name")]
-        [Required]
-        public string Name { get; set; } = null!;
 
         [Column("role")]
         [Required]
