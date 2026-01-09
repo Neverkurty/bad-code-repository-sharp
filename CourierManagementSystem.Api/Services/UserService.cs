@@ -58,7 +58,7 @@ public class UserService : IUserService
         {
             if (await _userRepository.ExistsByLoginAsync(request.Login))
             {
-                throw new ValidationException($"Пользователь с логином '{request.Login}' уже существует");
+                throw new ValidationException(ErrorMessages.UserWithLoginExists(request.Login));
             }
             user.ChangeLogin(request.Login);
         }
