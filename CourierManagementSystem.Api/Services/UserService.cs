@@ -27,10 +27,11 @@ public class UserService : IUserService
 
     public async Task<UserDto> CreateUserAsync(UserRequest request)
     {
-        if (await _userRepository.ExistsByLoginAsync(request.Login))
+        if (request == null)
         {
-            throw new ValidationException($"Пользователь с логином '{request.Login}' уже существует");
+            throw new ValidationException("Request cannot be null");
         }
+
 
         var user = new User
         {
