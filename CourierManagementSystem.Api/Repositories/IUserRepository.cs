@@ -4,6 +4,7 @@ namespace CourierManagementSystem.Api.Repositories;
 
 public interface IUserRepository
 {
+    Task CreateAndSaveAsync(User user);
     Task<List<User>> GetAllAsync();
     Task<User?> GetByIdAsync(long id);
     Task<User?> GetByLoginAsync(string login);
