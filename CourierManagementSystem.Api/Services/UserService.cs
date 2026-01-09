@@ -42,9 +42,6 @@ public class UserService : IUserService
             CreatedAt = SystemClock.UtcNow
         };
 
-        await _userRepository.CreateAsync(user);
-        await _userRepository.SaveChangesAsync();
-
         return UserDto.From(user);
     }
 
