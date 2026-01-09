@@ -77,4 +77,11 @@ public class UserRepository : IUserRepository
     {
         return await _context.SaveChangesAsync();
     }
+    
+    public async Task CreateAndSaveAsync(User user)
+    {
+        await CreateAsync(user);
+        await SaveChangesAsync();
+    }
+
 }
