@@ -4,6 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourierManagementSystem.Api.Models.Entities
 {
+    public void SetPassword(string password)
+    {
+        PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+    }
+
     [Table("users")]
     public class User
     {
