@@ -70,7 +70,7 @@ public class UserService : IUserService
 
         if (request.Role.HasValue)
         {
-            user.Role = request.Role.Value;
+            user.ChangeRole(request.Role.Value);
         }
 
         if (!string.IsNullOrEmpty(request.Password))
