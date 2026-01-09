@@ -38,7 +38,7 @@ public class UserService : IUserService
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
             Name = request.Name,
             Role = request.Role,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = SystemClock.UtcNow
         };
 
         await _userRepository.CreateAsync(user);
