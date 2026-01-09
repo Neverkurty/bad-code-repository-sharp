@@ -77,7 +77,8 @@ public class UserService : IUserService
 
         if (!string.IsNullOrEmpty(request.Password))
         {
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+           user.SetPassword(request.Password);
+
         }
 
         await _userRepository.UpdateAsync(user);
