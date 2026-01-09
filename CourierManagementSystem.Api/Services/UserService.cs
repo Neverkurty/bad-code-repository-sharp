@@ -54,7 +54,7 @@ public class UserService : IUserService
 
 
 
-        if (!string.IsNullOrEmpty(request.Login) && request.Login != user.Login)
+        if (user.CanChangeLogin(request.Login))
         {
             if (await _userRepository.ExistsByLoginAsync(request.Login))
             {
