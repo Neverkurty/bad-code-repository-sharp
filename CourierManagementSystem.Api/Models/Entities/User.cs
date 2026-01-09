@@ -48,4 +48,10 @@ namespace CourierManagementSystem.Api.Models.Entities
         manager,
         courier
     }
+
+    public void ChangeRole(UserRole role)
+    {
+        Role = role;
+    }
+
 }
