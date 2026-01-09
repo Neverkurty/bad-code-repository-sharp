@@ -54,4 +54,10 @@ namespace CourierManagementSystem.Api.Models.Entities
         Role = role;
     }
 
+    public bool CanChangeLogin(string newLogin)
+    {
+        return !string.IsNullOrWhiteSpace(newLogin) && newLogin != Login;
+    }
+
+
 }
